@@ -6,21 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/lwjgl323/assimp_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/bgfx_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/blendish_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/build.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/cuda_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/dyncall_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/glfw_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/jemalloc_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/joml_license.txt"/>
 	<classpathentry kind="lib" path="libs/lwjgl323/joml-1.9.24.jar"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/khronos_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/libdivide_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/LICENSE"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/llvm_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/lmdb_license.txt"/>
 	<classpathentry kind="lib" path="libs/lwjgl323/lwjgl-assimp-natives-linux-arm32.jar"/>
 	<classpathentry kind="lib" path="libs/lwjgl323/lwjgl-assimp-natives-linux-arm64.jar"/>
 	<classpathentry kind="lib" path="libs/lwjgl323/lwjgl-assimp-natives-linux.jar"/>
@@ -239,25 +225,5 @@
 	<classpathentry kind="lib" path="libs/lwjgl323/lwjgl-zstd-natives-windows.jar"/>
 	<classpathentry kind="lib" path="libs/lwjgl323/lwjgl-zstd.jar"/>
 	<classpathentry kind="lib" path="libs/lwjgl323/lwjgl.jar"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/lz4_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/meow_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/nanosvg_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/nanovg_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/nfd_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/openal_soft_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/openvr_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/opus_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/ovr_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/remotery_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/rpmalloc_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/shaderc_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/tinyexr_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/tinyfd_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/tootle_directxmesh_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/tootle_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/vma_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/xxhash_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/yoga_license.txt"/>
-	<classpathentry kind="lib" path="libs/lwjgl323/zstd_license.txt"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

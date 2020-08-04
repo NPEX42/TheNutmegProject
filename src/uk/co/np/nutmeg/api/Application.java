@@ -1,8 +1,10 @@
 package uk.co.np.nutmeg.api;
 
 import uk.co.np.nutmeg.api.events.EventSystem;
+import uk.co.np.nutmeg.api.rendering.Renderer;
 import uk.co.np.nutmeg.glfw.DisplayManager;
 import uk.co.np.nutmeg.opengl.GLRenderer;
+import uk.co.np.nutmeg.util.Logger;
 
 public abstract class Application {
 	public abstract void OnUpdate(float ts);
@@ -23,7 +25,7 @@ public abstract class Application {
 			OnUpdate(tpf);
 			tp2 = System.currentTimeMillis();
 			tpf = (tp2 - tp1) / 1000f;
-			Logger.Log("Application/Start/UpdateLoop", "TPF: "+(tp2 - tp1)+"ms");
+			Logger.Debug("Application/Start/UpdateLoop", "TPF: "+(tp2 - tp1)+"ms");
 		}
 		OnDestroy();
 		DisplayManager.Close();

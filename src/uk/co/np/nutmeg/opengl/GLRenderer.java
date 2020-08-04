@@ -2,10 +2,10 @@ package uk.co.np.nutmeg.opengl;
 
 import org.lwjgl.opengl.GL46;
 
-import uk.co.np.nutmeg.api.IndexBuffer;
-import uk.co.np.nutmeg.api.Logger;
-import uk.co.np.nutmeg.api.Renderer;
-import uk.co.np.nutmeg.api.VertexArray;
+import uk.co.np.nutmeg.api.rendering.IndexBuffer;
+import uk.co.np.nutmeg.api.rendering.Renderer;
+import uk.co.np.nutmeg.api.rendering.VertexArray;
+import uk.co.np.nutmeg.util.Logger;
 
 import static org.lwjgl.opengl.GL46.*;
 
@@ -20,7 +20,7 @@ public class GLRenderer extends Renderer {
 	@Override
 	public void Draw(VertexArray vao, IndexBuffer ibo) {
 		vao.Bind();
-		Logger.Log("Nutmeg/GLRenderer", "Drawing "+ibo.GetVertexCount()+" Vertices...");
+		Logger.Debug("Nutmeg/GLRenderer", "Drawing "+ibo.GetVertexCount()+" Vertices...");
 		glDrawElements(GL_TRIANGLES, ibo.GetVertexCount(), GL_UNSIGNED_INT, 0);
 		vao.Unbind();
 	}

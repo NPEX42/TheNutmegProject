@@ -1,4 +1,4 @@
-package uk.co.np.nutmeg.api;
+package uk.co.np.nutmeg.util;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

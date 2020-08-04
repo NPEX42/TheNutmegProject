@@ -10,6 +10,7 @@ import org.joml.*;
 import java.util.*;
 
 import uk.co.np.nutmeg.api.*;
+import uk.co.np.nutmeg.util.IO;
 public class GLShader {
 	private int programID, vertexID, fragmentID;
 	private Map<String, Integer> uniforms;

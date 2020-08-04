@@ -1,4 +1,4 @@
-package uk.co.np.nutmeg.opengl;
+package uk.co.np.nutmeg.api.rendering;
 
 public interface IBuffer {
 	public void Bind();

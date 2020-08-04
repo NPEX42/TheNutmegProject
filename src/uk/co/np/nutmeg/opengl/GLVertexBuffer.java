@@ -3,22 +3,27 @@ import static org.lwjgl.opengl.GL46.*;
 
 import java.util.Arrays;
 
-import uk.co.np.nutmeg.api.Logger;
-import uk.co.np.nutmeg.api.VertexBuffer;
+import uk.co.np.nutmeg.api.rendering.VertexBuffer;
+import uk.co.np.nutmeg.util.Logger;
 public class GLVertexBuffer extends VertexBuffer {
 
 	private int ID;
+	private int index;
 	public void Bind() { glBindBuffer(GL_ARRAY_BUFFER, ID); }
 	public void Delete() { glDeleteBuffers(ID); }
 	public static VertexBuffer Create(int _Index, float[] _Data, int _Size, int _Stride, int _Offset) {
 		if(_Data.length % _Size != 0) { System.err.println("ERROR | VERTEX BUFFER LENGTH IS NOT A MULTIPLE OF SIZE..."); }
 		VertexBuffer buffer = new GLVertexBuffer(glGenBuffers());
 		buffer.Bind();
-		glBufferData(GL_ARRAY_BUFFER, _Data, GL_STATIC_DRAW);
-		glVertexAttribPointer(_Index, _Size, GL_FLOAT, false, _Stride, _Offset);
+		buffer.SetFloatData(_Data);
+		buffer.LinkToVAO(_Index, _Size, GL_FLOAT, _Stride, _Offset);
 		glEnableVertexAttribArray(_Index);
-		System.err.println("[Nutmeg] Creating VBO, Data: "+Arrays.toString(_Data));
+		Logger.Debug("GLVertexBuffer/CONSTRUCTOR", "Created VBO #"+buffer.getID()+" (Data: "+Arrays.toString(_Data)+")");
 		return buffer;
+	}
+	
+	public void SetFloatData(float[] data) {
+		glBufferData(GL_ARRAY_BUFFER, data, GL_STATIC_DRAW);
 	}
 	
 	public static VertexBuffer Create(int _Index, float[] _Data, int _Size) {
@@ -27,18 +32,22 @@ public class GLVertexBuffer extends VertexBuffer {
 	
 	private GLVertexBuffer(int _ID) {
 		ID = _ID;
-		System.err.println("[Nutmeg] Creating VBO #"+ID);
+		//Logger.Debug("GLVertexBuffer/CONSTRUCTOR", "Created VBO #"+ID);
 	}
 	@Override
 	public void Unbind() {
-		// TODO Auto-generated method stub
-		
+		glBindBuffer(GL_ARRAY_BUFFER, 0); 
 	}
 	@Override
 	public void Invalidate() {
-		// TODO Auto-generated method stub
-		
+		glInvalidateBufferData(ID);
 	}
+	@Override
+	public void LinkToVAO(int index, int size, int format, int stride, int offset) {
+		glVertexAttribPointer(index, size, format, false, stride, offset);
+	}
+
+	
 	
 	
 

@@ -1,9 +1,10 @@
 package uk.co.np.nutmeg.glfw;
 
 import static org.lwjgl.glfw.GLFW.*;
-import uk.co.np.nutmeg.api.Logger;
 
 import org.lwjgl.opengl.GL;
+
+import uk.co.np.nutmeg.util.Logger;
 
 public class DisplayManager {
 	private static long windowID;

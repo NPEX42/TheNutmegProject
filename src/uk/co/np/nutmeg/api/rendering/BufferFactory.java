@@ -1,4 +1,4 @@
-package uk.co.np.nutmeg.api;
+package uk.co.np.nutmeg.api.rendering;
 
 import uk.co.np.nutmeg.opengl.GLIndexBuffer;
 import uk.co.np.nutmeg.opengl.GLVertexArray;

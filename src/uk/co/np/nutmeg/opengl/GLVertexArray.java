@@ -1,8 +1,8 @@
 package uk.co.np.nutmeg.opengl;
 import static org.lwjgl.opengl.GL46.*;
 
-import uk.co.np.nutmeg.api.Logger;
-import uk.co.np.nutmeg.api.VertexArray;
+import uk.co.np.nutmeg.api.rendering.VertexArray;
+import uk.co.np.nutmeg.util.Logger;
 public class GLVertexArray extends VertexArray {
 	
 	private int ID;
@@ -10,7 +10,7 @@ public class GLVertexArray extends VertexArray {
 	public void Unbind() { glBindVertexArray(0);  }
 	private GLVertexArray() {
 		ID = glGenVertexArrays();
-		System.err.println("[Nutmeg] Creating VAO #"+ID);
+		Logger.Debug("GLVertexArray/CONSTRUCTOR", "Created VAO #"+ID);
 	}
 	public static VertexArray Create() {
 		VertexArray array = new GLVertexArray();
@@ -19,9 +19,6 @@ public class GLVertexArray extends VertexArray {
 	}
 	public void Delete() { glDeleteVertexArrays(ID); }
 	@Override
-	public void Invalidate() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void Invalidate() {}
 
 }

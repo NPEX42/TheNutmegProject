@@ -1,6 +1,7 @@
-package uk.co.np.nutmeg.api;
+package uk.co.np.nutmeg.util;
 
 public class Logger {
+	private static boolean debugMode;
 	public static void Log(String location, String message) {
 		System.out.println("["+location+"]: "+message);
 	}
@@ -10,6 +11,6 @@ public class Logger {
 	}
 	
 	public static void Debug(String location, String message) {
-		System.err.println("["+location+"]: "+message);
+		if(debugMode) System.err.println("["+location+"]: "+message);
 	}
 }

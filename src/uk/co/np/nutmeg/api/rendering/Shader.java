@@ -31,6 +31,9 @@ public interface Shader extends IRendererPrimitive {
 	public void UploadFloats(String _Name, float[] _Values);
 	
 	public void UploadInts(String _Name, int[] _Values);
+	public void UploadInt(String name, int value);
+	
+	public void UploadTexture(String name, Texture tex, int slot);
 	
 	public void UploadColor(String _Name, Color _C);
 }

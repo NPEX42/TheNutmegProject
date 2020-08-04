@@ -2,8 +2,10 @@ package uk.co.np.nutmeg.api;
 
 import uk.co.np.nutmeg.api.events.EventSystem;
 import uk.co.np.nutmeg.api.rendering.Renderer;
+import uk.co.np.nutmeg.api.rendering.Shader;
 import uk.co.np.nutmeg.glfw.DisplayManager;
 import uk.co.np.nutmeg.opengl.GLRenderer;
+import uk.co.np.nutmeg.opengl.GLShader;
 import uk.co.np.nutmeg.util.Logger;
 
 public abstract class Application {
@@ -38,5 +40,16 @@ public abstract class Application {
 	public boolean OnCloseEvent() {
 		Logger.Debug("Application/OnCloseEvent", "Window Closed");
 		return false;
+	}
+	
+	public void LoadShader(String vsPath, String fsPath) {
+		Shader shader = GLShader.LoadShader(vsPath, fsPath);
+		if(shader == null) { Logger.Error("Application/LoadShader", "Unable To Load Shader... ["+vsPath+", "+fsPath+"]"); return; }
+		shader.SetAttribute(0, "_LocalPosition");
+		shader.SetAttribute(1, "_UV0");
+		shader.SetAttribute(2, "_UV1");
+		shader.SetAttribute(3, "_UV2");
+		shader.SetAttribute(4, "_UV3");
+		renderer.SetActiveShader(shader);
 	}
 }

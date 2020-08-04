@@ -10,8 +10,9 @@ import org.joml.*;
 import java.util.*;
 
 import uk.co.np.nutmeg.api.*;
+import uk.co.np.nutmeg.api.rendering.Shader;
 import uk.co.np.nutmeg.util.IO;
-public class GLShader {
+public class GLShader implements Shader {
 	private int programID, vertexID, fragmentID;
 	private Map<String, Integer> uniforms;
 	private GLShader(int _ProgramID, int _VertexID, int _FragmentID) {
@@ -21,7 +22,7 @@ public class GLShader {
 		uniforms = new HashMap<String, Integer>();
 	}
 	
-	public static GLShader CompileShader(String _VertexSource, String _FragmentSource) {
+	public static GLShader CompileShaderSource(String _VertexSource, String _FragmentSource) {
 		int programID, vertexID, fragmentID;
 		programID = glCreateProgram();
 		vertexID = glCreateShader(GL_VERTEX_SHADER);
@@ -60,18 +61,18 @@ public class GLShader {
 		return new GLShader(programID, vertexID, fragmentID);
 	}
 	
-	public static GLShader LoadShader(String _VertexPath, String _FragmentPath) {
+	public static GLShader LoadShaderSource(String _VertexPath, String _FragmentPath) {
 		String vertexSource = IO.LoadString(_VertexPath);
 		String fragmentSource = IO.LoadString(_FragmentPath);
-		if(vertexSource == null || fragmentSource == null) return LoadJAR(_VertexPath, _FragmentPath);
-		return CompileShader(vertexSource, fragmentSource);
+		if(vertexSource == null || fragmentSource == null) return LoadJARSource(_VertexPath, _FragmentPath);
+		return CompileShaderSource(vertexSource, fragmentSource);
 	}
 	
-	private static GLShader LoadJAR(String _VertexPath, String _FragmentPath) {
+	private static GLShader LoadJARSource(String _VertexPath, String _FragmentPath) {
 		String vertexSource = IO.LoadStringJAR(_VertexPath);
 		String fragmentSource = IO.LoadStringJAR(_FragmentPath);
 		if(vertexSource == null || fragmentSource == null) return null;
-		return CompileShader(vertexSource, fragmentSource);
+		return CompileShaderSource(vertexSource, fragmentSource);
 	}
 
 	public void Bind() { glUseProgram(programID); }
@@ -180,6 +181,36 @@ public class GLShader {
 	
 	public void SetAttribute(int _Index, String _Name) {
 		glBindAttribLocation(programID, _Index, _Name);
+	}
+
+	@Override
+	public void Unbind() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void Invalidate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public GLShader CompileShader(String _VertexSource, String _FragmentSource) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GLShader LoadShader(String _VertexPath, String _FragmentPath) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GLShader LoadJAR(String _VertexPath, String _FragmentPath) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

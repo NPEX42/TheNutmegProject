@@ -1,5 +1,7 @@
 package uk.co.np.nutmeg.api;
 
+import uk.co.np.nutmeg.api.events.EventSystem;
+import uk.co.np.nutmeg.glfw.DisplayManager;
 import uk.co.np.nutmeg.opengl.GLRenderer;
 
 public abstract class Application {
@@ -9,8 +11,9 @@ public abstract class Application {
 	
 	private Renderer renderer;
 	
-	public void Start(int width, int height, String title) {
+	public final void Start(int width, int height, String title) {
 		DisplayManager.Open(width, height, title);
+		EventSystem.RegisterCloseEvent(this::OnCloseEvent);
 		renderer = new GLRenderer();
 		long tp1, tp2;
 		float tpf = 1;
@@ -20,12 +23,18 @@ public abstract class Application {
 			OnUpdate(tpf);
 			tp2 = System.currentTimeMillis();
 			tpf = (tp2 - tp1) / 1000f;
-			Logger.Log("", "TPF: "+(tp2 - tp1));
+			Logger.Log("Application/Start/UpdateLoop", "TPF: "+(tp2 - tp1)+"ms");
 		}
+		OnDestroy();
 		DisplayManager.Close();
 	}
 	
-	protected Renderer GetAppRenderer() {
+	protected final Renderer GetAppRenderer() {
 		return renderer;
+	}
+	
+	public boolean OnCloseEvent() {
+		Logger.Debug("Application/OnCloseEvent", "Window Closed");
+		return false;
 	}
 }

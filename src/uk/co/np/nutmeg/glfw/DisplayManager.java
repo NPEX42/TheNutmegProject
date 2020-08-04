@@ -1,18 +1,16 @@
-package uk.co.np.nutmeg.api;
+package uk.co.np.nutmeg.glfw;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static uk.co.np.nutmeg.api.Logger.*;
+import uk.co.np.nutmeg.api.Logger;
 
 import org.lwjgl.opengl.GL;
-
-import static uk.co.np.nutmeg.api.Errors.*;
 
 public class DisplayManager {
 	private static long windowID;
 	public static void Open(int width, int height, String title) {
-		if(!glfwInit()) { Logger.Error("Nutmeg/DisplayManager", "Unable To Init GLFW..."); System.exit(EC_GLFW_INIT); }
+		if(!glfwInit()) { Logger.Error("Nutmeg/DisplayManager", "Unable To Init GLFW..."); System.exit(-1); }
 		windowID = glfwCreateWindow(width, height, title, 0, 0);
-		if(windowID == 0) { Logger.Error("Nutmeg/DisplayManager", "Unable To Open A Window..."); System.exit(EC_GLFW_WINDOW); }
+		if(windowID == 0) { Logger.Error("Nutmeg/DisplayManager", "Unable To Open A Window..."); System.exit(-2); }
 		glfwMakeContextCurrent(windowID);
 		GL.createCapabilities();
 		glfwSwapInterval(1);
@@ -30,4 +28,11 @@ public class DisplayManager {
 		glfwDestroyWindow(windowID);
 		glfwTerminate();
 	}
+	
+	public static long GetWindowID() { return windowID; }
+	
+	public static void RequestClose() {
+		glfwSetWindowShouldClose(windowID, true);
+	}
+	
 }

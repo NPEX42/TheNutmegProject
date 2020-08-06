@@ -1,6 +1,12 @@
 package uk.co.np.nutmeg.opengl;
 
 import uk.co.np.nutmeg.api.rendering.Texture;
+import java.io.*;
+import uk.co.np.nutmeg.util.BufferUtils;
+import uk.co.np.nutmeg.util.EndianManager;
+import uk.co.np.nutmeg.util.EndianMode;
+import uk.co.np.nutmeg.util.Logger;
+
 import static org.lwjgl.stb.STBImage.*;
 import static org.lwjgl.opengl.GL46.*;
 
@@ -29,11 +35,15 @@ public class GLTexture extends Texture {
 		glInvalidateBufferData(ID);
 	}
 	
-	private GLTexture(ByteBuffer pixels, int W, int H) {
+	private GLTexture(ByteBuffer pixels, int W, int H, EndianMode mode) {
 		ID = glGenTextures();
+		System.out.print("Building Texture #"+ID+" W: "+W+" H: "+H+" Pixels: "+BufferUtils.ToHexString(pixels)+" ("+pixels.capacity()+"B) ");
+		if(mode == EndianMode.LITTLE_ENDIAN) System.out.println("Format: RGBA");
+		if(mode == EndianMode.BIG_ENDIAN) System.out.println("Format: BGRA");
+		if(mode == EndianMode.MIDDLE_ENDIAN) System.out.println("Format: ????");
 		Bind(0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, W, H, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 		Unbind();
 	}
@@ -42,7 +52,7 @@ public class GLTexture extends Texture {
 		ID = id;
 	}
 	
-	public static Texture LoadTexture(String path) {
+	public static Texture Load(String path) {
 		int[] 
 			channels = new int[1],
 			w = new int[1],
@@ -50,20 +60,29 @@ public class GLTexture extends Texture {
 		stbi_set_flip_vertically_on_load(true);
 		ByteBuffer buffer = stbi_load(path, w, h,channels, 4);
 		if(buffer == null) return null;
-		return new GLTexture(buffer, w[0], h[0]);
+		return new GLTexture(buffer, w[0], h[0], EndianManager.GetNativeEndianMode());
 	}
 	
 	public static Texture CreateRawBinary(ByteBuffer pixelData, int W, int H) {
-		return new GLTexture(pixelData, W, H);
+		return new GLTexture(pixelData, W, H, EndianManager.GetNativeEndianMode());
 	}
 	
-	public static Texture CreateFromColors(Color[] pixels, int W, int H) {
+	public static Texture CreateFromColors(EndianMode mode, Color[] pixels, int W, int H) {
 		ByteBuffer buffer = MemoryUtil.memAlloc(pixels.length * Integer.BYTES);
 		for(Color pixel : pixels) {
-			buffer.put((byte) pixel.getRed());
-			buffer.put((byte) pixel.getGreen());
-			buffer.put((byte) pixel.getBlue());
-			buffer.put((byte) pixel.getAlpha());
+			if(mode == EndianMode.BIG_ENDIAN) {
+				buffer.put((byte) pixel.getRed());
+				buffer.put((byte) pixel.getGreen());
+				buffer.put((byte) pixel.getBlue());
+				buffer.put((byte) pixel.getAlpha());
+			}
+			
+			if(mode == EndianMode.LITTLE_ENDIAN) {
+				buffer.put((byte) pixel.getAlpha());
+				buffer.put((byte) pixel.getBlue());
+				buffer.put((byte) pixel.getGreen());
+				buffer.put((byte) pixel.getRed());
+			}
 		}
 		return CreateRawBinary(buffer, W, H);
 	}
@@ -77,7 +96,7 @@ public class GLTexture extends Texture {
 				pixels1d[y * W + x] = pixels[y][x];
 			}
 		}
-		return CreateFromColors(pixels1d, W, H);
+		return CreateFromColors(EndianManager.GetNativeEndianMode(), pixels1d, W, H);
 	}
 	
 	public static Texture CreateFromBufferedImage(BufferedImage img) {
@@ -91,7 +110,22 @@ public class GLTexture extends Texture {
 			}
 		}
 		
-		return CreateFromColors(pixels, W, H);
+		return CreateFromColors(EndianManager.GetNativeEndianMode(), pixels, W, H);
+	}
+	
+	public void SaveToDisk(String filePath) {
+		ByteBuffer buffer = MemoryUtil.memAlloc(width * height * 4 * Integer.BYTES);
+		glGetnTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+		File file = new File(filePath);
+		try { file.createNewFile(); } catch(Exception ex) {}
+		try(DataOutputStream stream = new DataOutputStream(new FileOutputStream(filePath))) {
+			for(int i = 0; i < buffer.capacity(); i++) {
+				stream.write(buffer.get());
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

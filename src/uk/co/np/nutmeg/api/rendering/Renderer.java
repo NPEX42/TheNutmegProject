@@ -2,6 +2,8 @@ package uk.co.np.nutmeg.api.rendering;
 
 import org.joml.Matrix4f;
 
+import uk.co.np.nutmeg.opengl.GLRenderer;
+
 public abstract class Renderer {
 	
 	protected Shader activeShader;
@@ -11,5 +13,12 @@ public abstract class Renderer {
 	
 	public void SetActiveShader(Shader shader) {
 		activeShader = shader;
+	}
+	public Shader GetActiveShader() {
+		return activeShader;
+	}
+	
+	public static Renderer GetRenderer() {
+		return new GLRenderer();
 	}
 }

@@ -3,6 +3,7 @@ package uk.co.np.nutmeg.api;
 import uk.co.np.nutmeg.api.events.EventSystem;
 import uk.co.np.nutmeg.api.rendering.Renderer;
 import uk.co.np.nutmeg.api.rendering.Shader;
+import uk.co.np.nutmeg.api.rendering.Texture;
 import uk.co.np.nutmeg.glfw.DisplayManager;
 import uk.co.np.nutmeg.opengl.GLRenderer;
 import uk.co.np.nutmeg.opengl.GLShader;
@@ -51,5 +52,28 @@ public abstract class Application {
 		shader.SetAttribute(3, "_UV2");
 		shader.SetAttribute(4, "_UV3");
 		renderer.SetActiveShader(shader);
+	}
+	
+	public void SetShaderFloat(String name, float value) {
+		if(renderer.GetActiveShader() == null) return;
+		renderer.GetActiveShader().UploadFloat(name, value);
+	}
+	
+	public void SetShaderInt(String name, int value) {
+		if(renderer.GetActiveShader() == null) return;
+		renderer.GetActiveShader().UploadInt(name, value);
+	}
+	
+	public void SetShaderTexture(String name, Texture tex, int slot) {
+		if(renderer.GetActiveShader() == null) return;
+		renderer.GetActiveShader().UploadTexture(name, tex, slot);
+	}
+	
+	public Texture LoadTexture(String path) {
+		return Texture.LoadTexture(path);
+	}
+	
+	public void SaveToDisk(Texture tex, String path) {
+		tex.SaveToDisk(path);
 	}
 }
